@@ -1,10 +1,9 @@
 package com.github.cchacin.android.jackson;
 
-import com.google.common.collect.Sets;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class MutableIssue {
@@ -13,7 +12,8 @@ public class MutableIssue {
     public void test() throws Exception {
         // Given
         final Mutable mutable = new Mutable("carlos");
-        final Set<Mutable> mutables = Sets.newHashSet(mutable);
+        final Set<Mutable> mutables = new HashSet<Mutable>();
+        mutables.add(mutable);
 
         System.out.println(mutable.hashCode());
 

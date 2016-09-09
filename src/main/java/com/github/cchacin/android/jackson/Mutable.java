@@ -1,7 +1,5 @@
 package com.github.cchacin.android.jackson;
 
-import com.google.common.base.Objects;
-
 public class Mutable {
 
     public String name;
@@ -14,12 +12,16 @@ public class Mutable {
     public boolean equals(final Object o) {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
+
         final Mutable mutable = (Mutable) o;
-        return Objects.equal(this.name, mutable.name);
+
+        if (this.name != null ? !this.name.equals(mutable.name) : mutable.name != null) { return false; }
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.name);
+        return this.name != null ? this.name.hashCode() : 0;
     }
 }
