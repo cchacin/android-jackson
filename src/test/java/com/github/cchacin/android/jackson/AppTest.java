@@ -1,38 +1,33 @@
 package com.github.cchacin.android.jackson;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+import org.assertj.core.api.Assertions;
+import org.junit.Test;
+
+public class AppTest {
+
+    @Test
+    public void testSerialization() throws Exception {
+        // Given
+        final App app = new App("a", 1, true);
+
+        // When
+        final String json = new ObjectMapper().writeValueAsString(app);
+
+        // Then
+        Assertions.assertThat(json).isEqualTo("{\"a\":\"a\",\"b\":1,\"c\":true}");
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+    @Test
+    public void testDeserialization() throws Exception {
+        // Given
+        final String json = "{\"a\":\"a\",\"b\":1,\"c\":true}";
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+        // When
+        final App app = new ObjectMapper().readValue(json, App.class);
+
+        // Then
+        Assertions.assertThat(app).isEqualToComparingFieldByField(new App("a", 1, true)); // We don't have equals() :(
     }
 }
